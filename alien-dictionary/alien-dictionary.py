@@ -25,11 +25,9 @@ class Solution:
                     inDegree[word_2[i]] += 1 
                     break
                     
+            #check for prefixes        
             else:
                 if len(word_2) < len(word_1): return ""
-                    
-        print(graph)
-        print(inDegree)
         
         #Find all sources 
         sortedOrder = [] 
