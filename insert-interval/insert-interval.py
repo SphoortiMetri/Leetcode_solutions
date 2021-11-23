@@ -5,7 +5,7 @@ class Solution:
         intervals.sort()
 
         def overlap(interval1, interval2):
-            return not (interval2[1] < interval1[0] or interval1[1] < interval2[0])
+            return interval2[0] <= interval1[1] or interval2[1] <= interval1[1]
 
         ans = []
         for interval in intervals:
