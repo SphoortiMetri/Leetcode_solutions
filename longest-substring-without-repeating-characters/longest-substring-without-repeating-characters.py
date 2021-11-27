@@ -2,27 +2,23 @@ from collections import Counter
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        left = 0 
-        right = 0 
-        n = len(s) 
-        dict_ = [0]*128
+        max_len = 0 
+        window_start = 0 
+        char_index = {}
         
-        res = 0 
-        
-        while right < len(s): 
-            r = s[right] 
-            dict_[ord(r)] += 1 
-            
-            while dict_[ord(r)] > 1: 
-                l = s[left] 
-                dict_[ord(l)] -= 1 
-                left += 1 
+        for window_end in range(len(s)): 
+            right_char = s[window_end] 
+            if right_char in char_index: 
+                window_start = max(window_start, char_index[right_char]+1)
                 
-            res = max(res, right -left+1) 
+            char_index[right_char] = window_end
+            max_len = max(max_len, window_end-window_start+1) 
             
-            right += 1 
+        return max_len
             
-        return res
+
+        
+        
                 
 
         
