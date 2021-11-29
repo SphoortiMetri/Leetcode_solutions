@@ -14,4 +14,6 @@ class Solution:
             else: 
                 return max(helper(p1, p2+1), helper(p1+1,p2))
             
+        dp = [[-1 for j in range(len(text2))] for i in range(len(text1))]
         return helper(0,0)
+        
