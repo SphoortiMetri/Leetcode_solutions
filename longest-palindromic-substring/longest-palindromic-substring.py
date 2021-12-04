@@ -1,66 +1,26 @@
 class Solution:
+    def __init__(self): 
+        self.res = ""
+        self.max_len = 0 
+    
+    def expand_around_center(self,s,l,r): 
+        while l >= 0 and r < len(s) and s[l] == s[r]: 
+            if r - l+ 1> self.max_len:
+                self.res = s[l:r+1]
+                self.max_len = r-l+1
+                    
+            l -= 1
+            r += 1 
+                
     def longestPalindrome(self, s: str) -> str:
-        
         n = len(s)
-        res = ""
-        max_len = 0 
+
 
         for i in range(n): 
-            
-            l = i 
-            r = i 
-            while l >= 0 and r < len(s) and s[l] == s[r]: 
-                if r - l+ 1> max_len:
-                    res = s[l:r+1]
-                    max_len = r-l+1
-                    
-                l -= 1
-                r += 1 
-                
-            
-            l = i
-            r = i+1
-            while l >= 0 and r < len(s) and s[l] == s[r]: 
-                if r - l+ 1> max_len:
-                    res = s[l:r+1]
-                    max_len = r-l+1
-                    
-                l -= 1
-                r += 1 
-            
-        return res
+            self.expand_around_center(s,i,i)
+            self.expand_around_center(s,i,i+1)
             
             
-        
-
-            
-            
-            
+        return self.res
     
-            
-
-            
-            
-            
-                
-                
-                    
-        
-            
-                        
-
-            
-            
-            
-            
-                    
-                
-                    
-            
-
-        
-        
-        
-        
-                
         
