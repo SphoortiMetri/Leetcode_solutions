@@ -1,21 +1,41 @@
 from collections import deque
+import math
 
 class Solution:
-    def coinChange(self, coins: List[int], amount: int) -> int:
+    def coinChange(self, coins: List[int], amount: int) -> int: 
         
-        queue = deque([(amount,0)]) 
+        def count_change_recursive(denominations, total, currentIndex, memo):
         
-        seen = set([amount]) 
-        while queue: 
-            accumulated_amount, num_coins = queue.popleft()
+            if total == 0:
+                return 0
+
+            n = len(denominations)
+            if n == 0 or currentIndex >= n:
+                return math.inf
             
-            if accumulated_amount == 0: 
-                return num_coins 
-            
-            for coin in coins: 
-                if accumulated_amount - coin >= 0 and accumulated_amount - coin not in seen: 
-                    queue.append((accumulated_amount-coin, num_coins+1)) 
-                    seen.add(accumulated_amount - coin)
+            if memo[currentIndex][total] != -2: 
+                return memo[currentIndex][total]
+
+            count1 = math.inf
+
+            if denominations[currentIndex] <= total:
+                res = count_change_recursive(denominations, total - denominations[currentIndex], currentIndex, memo)
+                if res != math.inf:
+                    count1 = res + 1
+
+            count2 = count_change_recursive(denominations, total, currentIndex + 1, memo)
+            memo[currentIndex][total] = min(count1, count2)
+            return memo[currentIndex][total]
+        
+        memo = [[-2 for i in range(amount+1)] for j in range(len(coins))]
+        ans = count_change_recursive(coins, amount, 0, memo)
+        if ans == math.inf: 
+            return -1 
+        else: 
+            return ans
+
+    
+
                     
-        return -1
-        
+                
+                
